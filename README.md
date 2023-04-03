@@ -1,4 +1,4 @@
-# JSON-Server and Redux Toolkit Query App React App
+# JSON-Server and Redux Toolkit Query React App
 
 This is a sample app that demonstrates how to use JSON-Server as a mock API and Redux Toolkit Query to fetch data from that API.
 ## Installation
