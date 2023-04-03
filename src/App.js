@@ -1,23 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import {
+  useAddPostMutation,
+  useDeletePostMutation,
+  useGetPostsQuery,
+} from "./features/apiSlice";
 
 function App() {
+  const { data: posts } = useGetPostsQuery();
+
+  const [addPost] = useAddPostMutation();
+  const [deletePost] = useDeletePostMutation();
+
+  const [post, setPost] = useState("");
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    addPost({ body: post });
+    setPost("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        value={post}
+        placeholder="Enter post text"
+        onChange={(e) => setPost(e.target.value)}
+      />
+      <button type="button" onClick={handleClick}>
+        Add Post
+      </button>
+
+      <h1>Data List</h1>
+      <ul>
+        {posts &&
+          posts.map((post) => {
+            return (
+              <li key={post.id}>
+                <span>
+                  {post.id}. {post.body}
+                </span>
+                <button onClick={() => deletePost(post.id)}>Delete</button>
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 }
